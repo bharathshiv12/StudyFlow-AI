@@ -14,7 +14,264 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      assignments: {
+        Row: {
+          completed: boolean
+          created_at: string
+          due_date: string
+          file_name: string | null
+          file_path: string | null
+          id: string
+          name: string
+          notes: string | null
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          due_date: string
+          file_name?: string | null
+          file_path?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          due_date?: string
+          file_name?: string | null
+          file_path?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          tab: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          tab: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          tab?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_quotes: {
+        Row: {
+          author: string | null
+          created_at: string
+          id: string
+          quote_date: string
+          quote_text: string
+          user_id: string
+        }
+        Insert: {
+          author?: string | null
+          created_at?: string
+          id?: string
+          quote_date: string
+          quote_text: string
+          user_id: string
+        }
+        Update: {
+          author?: string | null
+          created_at?: string
+          id?: string
+          quote_date?: string
+          quote_text?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      focus_sessions: {
+        Row: {
+          completed_minutes: number
+          duration_minutes: number
+          ended_at: string | null
+          finished: boolean
+          id: string
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_minutes?: number
+          duration_minutes: number
+          ended_at?: string | null
+          finished?: boolean
+          id?: string
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_minutes?: number
+          duration_minutes?: number
+          ended_at?: string | null
+          finished?: boolean
+          id?: string
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      quizzes: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          questions: Json
+          score: number | null
+          title: string
+          total: number | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          questions: Json
+          score?: number | null
+          title: string
+          total?: number | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          questions?: Json
+          score?: number | null
+          title?: string
+          total?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_tasks: {
+        Row: {
+          completed: boolean
+          created_at: string
+          description: string | null
+          duration_minutes: number | null
+          id: string
+          scheduled_date: string
+          scheduled_time: string | null
+          subject: string
+          task_type: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          scheduled_date: string
+          scheduled_time?: string | null
+          subject: string
+          task_type?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          scheduled_date?: string
+          scheduled_time?: string | null
+          subject?: string
+          task_type?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string
+          daily_quote_email: boolean
+          daily_quote_sms: boolean
+          notify_email: boolean
+          notify_sms: boolean
+          reminder_lead_minutes: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          daily_quote_email?: boolean
+          daily_quote_sms?: boolean
+          notify_email?: boolean
+          notify_sms?: boolean
+          reminder_lead_minutes?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          daily_quote_email?: boolean
+          daily_quote_sms?: boolean
+          notify_email?: boolean
+          notify_sms?: boolean
+          reminder_lead_minutes?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
