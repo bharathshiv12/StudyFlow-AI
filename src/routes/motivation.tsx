@@ -38,7 +38,8 @@ function Motivation() {
 
   const updateSetting = async (key: "daily_quote_email" | "daily_quote_sms", val: boolean) => {
     setSettings((s) => ({ ...s, [key]: val }));
-    await supabase.from("user_settings").update({ [key]: val }).eq("user_id", user!.id);
+    const patch = key === "daily_quote_email" ? { daily_quote_email: val } : { daily_quote_sms: val };
+    await supabase.from("user_settings").update(patch).eq("user_id", user!.id);
     toast.success("Saved");
   };
 
