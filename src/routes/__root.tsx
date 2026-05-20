@@ -115,6 +115,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <ToastProvider />
     </QueryClientProvider>
   );
 }
