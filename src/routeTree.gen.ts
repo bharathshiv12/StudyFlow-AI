@@ -9,8 +9,56 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as MotivationRouteImport } from './routes/motivation'
+import { Route as HomeworkRouteImport } from './routes/homework'
+import { Route as FocusRouteImport } from './routes/focus'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AssignmentsRouteImport } from './routes/assignments'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlannerRoute = PlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MotivationRoute = MotivationRouteImport.update({
+  id: '/motivation',
+  path: '/motivation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeworkRoute = HomeworkRouteImport.update({
+  id: '/homework',
+  path: '/homework',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FocusRoute = FocusRouteImport.update({
+  id: '/focus',
+  path: '/focus',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssignmentsRoute = AssignmentsRouteImport.update({
+  id: '/assignments',
+  path: '/assignments',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +67,144 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assignments': typeof AssignmentsRoute
+  '/auth': typeof AuthRoute
+  '/focus': typeof FocusRoute
+  '/homework': typeof HomeworkRoute
+  '/motivation': typeof MotivationRoute
+  '/planner': typeof PlannerRoute
+  '/quiz': typeof QuizRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assignments': typeof AssignmentsRoute
+  '/auth': typeof AuthRoute
+  '/focus': typeof FocusRoute
+  '/homework': typeof HomeworkRoute
+  '/motivation': typeof MotivationRoute
+  '/planner': typeof PlannerRoute
+  '/quiz': typeof QuizRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assignments': typeof AssignmentsRoute
+  '/auth': typeof AuthRoute
+  '/focus': typeof FocusRoute
+  '/homework': typeof HomeworkRoute
+  '/motivation': typeof MotivationRoute
+  '/planner': typeof PlannerRoute
+  '/quiz': typeof QuizRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/assignments'
+    | '/auth'
+    | '/focus'
+    | '/homework'
+    | '/motivation'
+    | '/planner'
+    | '/quiz'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/assignments'
+    | '/auth'
+    | '/focus'
+    | '/homework'
+    | '/motivation'
+    | '/planner'
+    | '/quiz'
+    | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/assignments'
+    | '/auth'
+    | '/focus'
+    | '/homework'
+    | '/motivation'
+    | '/planner'
+    | '/quiz'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssignmentsRoute: typeof AssignmentsRoute
+  AuthRoute: typeof AuthRoute
+  FocusRoute: typeof FocusRoute
+  HomeworkRoute: typeof HomeworkRoute
+  MotivationRoute: typeof MotivationRoute
+  PlannerRoute: typeof PlannerRoute
+  QuizRoute: typeof QuizRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planner': {
+      id: '/planner'
+      path: '/planner'
+      fullPath: '/planner'
+      preLoaderRoute: typeof PlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/motivation': {
+      id: '/motivation'
+      path: '/motivation'
+      fullPath: '/motivation'
+      preLoaderRoute: typeof MotivationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/homework': {
+      id: '/homework'
+      path: '/homework'
+      fullPath: '/homework'
+      preLoaderRoute: typeof HomeworkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/focus': {
+      id: '/focus'
+      path: '/focus'
+      fullPath: '/focus'
+      preLoaderRoute: typeof FocusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assignments': {
+      id: '/assignments'
+      path: '/assignments'
+      fullPath: '/assignments'
+      preLoaderRoute: typeof AssignmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +217,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssignmentsRoute: AssignmentsRoute,
+  AuthRoute: AuthRoute,
+  FocusRoute: FocusRoute,
+  HomeworkRoute: HomeworkRoute,
+  MotivationRoute: MotivationRoute,
+  PlannerRoute: PlannerRoute,
+  QuizRoute: QuizRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
