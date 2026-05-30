@@ -12,7 +12,7 @@ import { Upload, FileText, Trash2, Download, Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/assignments")({
-  head: () => ({ meta: [{ title: "Assignments — Scholar OS" }] }),
+  head: () => ({ meta: [{ title: "Assignments — StudyFlow AI" }] }),
   component: () => <AppShell title="Assignments"><Assignments /></AppShell>,
 });
 
@@ -29,7 +29,9 @@ function Assignments() {
   const [uploading, setUploading] = useState(false);
 
   const load = async () => {
-    const { data } = await supabase.from("assignments").select("*").order("due_date");
+    if (!user) return;
+    const { data, error } = await supabase.from("assignments").select("*").order("due_date");
+    if (error) return toast.error(error.message);
     setList((data as A[]) ?? []);
   };
   useEffect(() => { if (user) load(); }, [user]);
@@ -52,9 +54,11 @@ function Assignments() {
       if (error) { setUploading(false); return toast.error(error.message); }
       file_path = path; file_name = file.name;
     }
-    const { error } = await supabase.from("assignments").insert({ user_id: user!.id, name, due_date: due, notes, file_path, file_name });
+    const { error } = await supabase
+      .from("assignments")
+      .insert({ user_id: user!.id, name, due_date: due, notes: notes || null, file_path, file_name });
     setUploading(false);
-    if (error) return toast.error(error.message);
+    if (error) return toast.error(error.message ?? "Failed to save assignment");
     setName(""); setDue(""); setNotes(""); setFile(null); if (fileRef.current) fileRef.current.value = "";
     toast.success("Assignment added"); load();
   };
@@ -80,10 +84,10 @@ function Assignments() {
           <div><Label>Submission date</Label><Input type="date" value={due} onChange={(e) => setDue(e.target.value)} /></div>
           <div><Label>Notes (optional)</Label><Input value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
           <div>
-            <Label>PDF file</Label>
-            <Input ref={fileRef} type="file" accept="application/pdf" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+            <Label>Attachment (optional)</Label>
+            <Input ref={fileRef} type="file" accept="application/pdf,.pdf,image/*,.doc,.docx" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
           </div>
-          <Button onClick={submit} disabled={uploading} className="w-full bg-gradient-primary">
+          <Button type="button" onClick={submit} disabled={uploading} className="w-full bg-gradient-primary">
             <Upload className="h-4 w-4" /> {uploading ? "Uploading…" : "Add assignment"}
           </Button>
         </div>
@@ -108,9 +112,9 @@ function Assignments() {
                   <div className="text-xs text-muted-foreground">Due {a.due_date}{a.notes ? ` · ${a.notes}` : ""}</div>
                 </div>
                 <div className="flex items-center gap-1">
-                  {a.file_path && <Button size="sm" variant="ghost" onClick={() => open(a)}><Download className="h-4 w-4" /></Button>}
-                  <Button size="sm" variant="ghost" onClick={() => toggle(a)}><Check className="h-4 w-4" /></Button>
-                  <Button size="sm" variant="ghost" onClick={() => remove(a)}><Trash2 className="h-4 w-4" /></Button>
+                  {a.file_path && <Button type="button" size="sm" variant="ghost" onClick={() => open(a)}><Download className="h-4 w-4" /></Button>}
+                  <Button type="button" size="sm" variant="ghost" onClick={() => toggle(a)}><Check className="h-4 w-4" /></Button>
+                  <Button type="button" size="sm" variant="ghost" onClick={() => remove(a)}><Trash2 className="h-4 w-4" /></Button>
                 </div>
               </div>
             </Card>

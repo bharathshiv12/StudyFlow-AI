@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { ToastProvider } from "@/components/toast-provider";
+import { AuthProvider } from "@/hooks/use-auth";
 
 function NotFoundComponent() {
   return (
@@ -73,14 +74,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "StudyFlow AI" },
       { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
+      { name: "author", content: "StudyFlow AI" },
+      { property: "og:title", content: "StudyFlow AI" },
       { property: "og:description", content: "Lovable Generated Project" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@StudyFlowAI" },
     ],
     links: [
       {
@@ -114,8 +115,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <ToastProvider />
+      <AuthProvider>
+        <Outlet />
+        <ToastProvider />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

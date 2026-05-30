@@ -7,7 +7,7 @@ export function Logo({ className = "" }: { className?: string }) {
         <GraduationCap className="h-5 w-5 text-primary-foreground" />
       </div>
       <div className="leading-tight">
-        <div className="text-base font-bold tracking-tight">Scholar OS</div>
+        <div className="text-base font-bold tracking-tight">StudyFlow AI</div>
         <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Study companion</div>
       </div>
     </div>

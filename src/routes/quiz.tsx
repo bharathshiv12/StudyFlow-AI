@@ -13,7 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Upload, ListChecks } from "lucide-react";
 
 export const Route = createFileRoute("/quiz")({
-  head: () => ({ meta: [{ title: "Quiz — Scholar OS" }] }),
+  head: () => ({ meta: [{ title: "Quiz — StudyFlow AI" }] }),
   component: () => <AppShell title="Quiz"><Quiz /></AppShell>,
 });
 

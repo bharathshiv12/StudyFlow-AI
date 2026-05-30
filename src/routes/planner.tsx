@@ -16,7 +16,7 @@ import { Sparkles, Send, Bell } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 export const Route = createFileRoute("/planner")({
-  head: () => ({ meta: [{ title: "Study Planner — Scholar OS" }] }),
+  head: () => ({ meta: [{ title: "Study Planner — StudyFlow AI" }] }),
   component: () => <AppShell title="Study Planner"><Planner /></AppShell>,
 });
 
@@ -89,8 +89,8 @@ function Planner() {
             </div>
           </div>
           <div className="mt-4 flex items-center gap-2">
-            <Button onClick={add} className="bg-gradient-primary">Add to timetable</Button>
-            <Button variant="ghost" size="sm" onClick={() => "Notification" in window && Notification.requestPermission()}>
+            <Button type="button" onClick={add} className="bg-gradient-primary">Add to timetable</Button>
+            <Button type="button" variant="ghost" size="sm" onClick={() => "Notification" in window && Notification.requestPermission()}>
               <Bell className="h-4 w-4" /> Enable reminders
             </Button>
           </div>
@@ -108,7 +108,7 @@ function Planner() {
                     <div className={`text-sm font-medium ${t.completed ? "text-muted-foreground line-through" : ""}`}>{t.subject} — {t.title}</div>
                     <div className="text-xs text-muted-foreground">{t.scheduled_time?.slice(0, 5) ?? "Anytime"} · {t.duration_minutes}m · {t.task_type}</div>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => remove(t.id)}>Delete</Button>
+                  <Button type="button" variant="ghost" size="sm" onClick={() => remove(t.id)}>Delete</Button>
                 </div>
               ))}
             </div>
@@ -155,7 +155,7 @@ function PlannerAI({ onPlanned }: { onPlanned: () => void }) {
       <div className="mb-4 space-y-2 rounded-lg border border-border/50 bg-background/30 p-3">
         <Label className="text-xs">Auto-generate a 7-day plan</Label>
         <Textarea rows={2} value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="e.g. Prepare for Physics midterm next Friday: kinematics, optics, thermodynamics" />
-        <Button size="sm" disabled={loading} onClick={generate} className="w-full bg-gradient-primary">Generate plan</Button>
+        <Button type="button" size="sm" disabled={loading} onClick={generate} className="w-full bg-gradient-primary">Generate plan</Button>
       </div>
       <div className="mb-3 h-64 space-y-2 overflow-y-auto rounded-lg border border-border/50 bg-background/30 p-3 text-sm">
         {msgs.length === 0 && <div className="text-xs text-muted-foreground">Ask anything: "How should I split 2h tonight between math and chemistry?"</div>}
@@ -168,7 +168,7 @@ function PlannerAI({ onPlanned }: { onPlanned: () => void }) {
       </div>
       <div className="flex gap-2">
         <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Ask the planner…" />
-        <Button size="icon" onClick={send} disabled={loading}><Send className="h-4 w-4" /></Button>
+        <Button type="button" size="icon" onClick={send} disabled={loading}><Send className="h-4 w-4" /></Button>
       </div>
     </Card>
   );

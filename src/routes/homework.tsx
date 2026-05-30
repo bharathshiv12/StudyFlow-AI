@@ -13,7 +13,7 @@ import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/homework")({
-  head: () => ({ meta: [{ title: "Homework AI — Scholar OS" }] }),
+  head: () => ({ meta: [{ title: "Homework AI — StudyFlow AI" }] }),
   component: () => <AppShell title="Homework AI"><Homework /></AppShell>,
 });
 
@@ -73,7 +73,7 @@ function Homework() {
       </div>
       <div className="mt-3 flex gap-2 border-t border-border/50 pt-3">
         <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Ask anything…" autoFocus />
-        <Button onClick={send} disabled={loading} className="bg-gradient-primary"><Send className="h-4 w-4" /></Button>
+        <Button type="button" onClick={send} disabled={loading} className="bg-gradient-primary"><Send className="h-4 w-4" /></Button>
       </div>
     </Card>
   );

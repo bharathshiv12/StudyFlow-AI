@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { Sparkles, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/motivation")({
-  head: () => ({ meta: [{ title: "Motivation — Scholar OS" }] }),
+  head: () => ({ meta: [{ title: "Motivation — StudyFlow AI" }] }),
   component: () => <AppShell title="Motivation"><Motivation /></AppShell>,
 });
 
@@ -39,7 +39,11 @@ function Motivation() {
   const updateSetting = async (key: "daily_quote_email" | "daily_quote_sms", val: boolean) => {
     setSettings((s) => ({ ...s, [key]: val }));
     const patch = key === "daily_quote_email" ? { daily_quote_email: val } : { daily_quote_sms: val };
-    await supabase.from("user_settings").update(patch).eq("user_id", user!.id);
+    const { error } = await supabase.from("user_settings").update(patch).eq("user_id", user!.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Saved");
   };
 

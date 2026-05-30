@@ -3,14 +3,26 @@ import { createMiddleware } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './types'
+import { createSupabaseFetch, withSupabaseTimeout } from '@/lib/supabase-network'
 
 
 
 export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server(
   async ({ next }) => {
     
-    const SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
+    const sanitizeEnvVar = (value: string | undefined) => value?.trim().replace(/^['"]|['"]$/g, '');
+    const getSupabaseEnv = (...values: Array<string | undefined>) => values.map(sanitizeEnvVar).find(Boolean);
+    const getSupabaseUrlFromProjectId = (projectId: string | undefined) => {
+      const id = sanitizeEnvVar(projectId);
+      return id ? `https://${id}.supabase.co` : undefined;
+    };
+
+    const SUPABASE_URL =
+      getSupabaseEnv(process.env.SUPABASE_URL, process.env.VITE_SUPABASE_URL) ||
+      getSupabaseUrlFromProjectId(
+        getSupabaseEnv(process.env.SUPABASE_PROJECT_ID, process.env.VITE_SUPABASE_PROJECT_ID),
+      );
+    const SUPABASE_PUBLISHABLE_KEY = getSupabaseEnv(process.env.SUPABASE_PUBLISHABLE_KEY, process.env.VITE_SUPABASE_PUBLISHABLE_KEY);
 
     if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
       const missing = [
@@ -51,6 +63,7 @@ export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          fetch: createSupabaseFetch(),
         },
         auth: {
           storage: undefined,
@@ -60,7 +73,10 @@ export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server
       }
     );
 
-    const { data, error } = await supabase.auth.getClaims(token);
+    const { data, error } = await withSupabaseTimeout(
+      supabase.auth.getClaims(token),
+      'Validating your Supabase session',
+    );
     if (error || !data?.claims) {
       throw new Error('Unauthorized: Invalid token');
     }

@@ -33,10 +33,10 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-sidebar-border px-3 py-4">
+      <SidebarHeader className="border-b border-white/10 bg-[rgba(15,23,42,0.7)] px-3 py-4 backdrop-blur-xl">
         <Logo />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-[rgba(15,23,42,0.6)] backdrop-blur-xl">
         <SidebarGroup>
           <SidebarGroupLabel>Workspace</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -68,7 +68,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-3">
+      <SidebarFooter className="p-3 bg-[rgba(15,23,42,0.7)] border-t border-white/10 backdrop-blur-xl">
         <Button variant="ghost" size="sm" onClick={signOut} className="justify-start">
           <LogOut className="h-4 w-4" />
           <span>Sign out</span>

@@ -9,7 +9,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGri
 import { Progress } from "@/components/ui/progress";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Dashboard — Scholar OS" }] }),
+  head: () => ({ meta: [{ title: "Dashboard — StudyFlow AI" }] }),
   component: Dashboard,
 });
 
@@ -35,6 +35,7 @@ function DashboardInner() {
       ]);
       const focusByDay: Record<string, number> = {};
       (focus.data ?? []).forEach((f) => {
+        if (!f.started_at) return;
         const d = (f.started_at as string).slice(0, 10);
         focusByDay[d] = (focusByDay[d] ?? 0) + (f.completed_minutes ?? 0);
       });

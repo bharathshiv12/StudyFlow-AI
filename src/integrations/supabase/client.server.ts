@@ -4,10 +4,28 @@
 // For user-authenticated queries (with RLS), use the auth middleware instead.
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
+import { createSupabaseFetch } from '@/lib/supabase-network';
+
+function sanitizeEnvVar(value: string | undefined) {
+  return value?.trim().replace(/^['"]|['"]$/g, '');
+}
+
+function getSupabaseEnv(...values: Array<string | undefined>) {
+  return values.map(sanitizeEnvVar).find(Boolean);
+}
+
+function getSupabaseUrlFromProjectId(projectId: string | undefined) {
+  const id = sanitizeEnvVar(projectId);
+  return id ? `https://${id}.supabase.co` : undefined;
+}
 
 function createSupabaseAdminClient() {
-  const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const SUPABASE_URL =
+    getSupabaseEnv(process.env.SUPABASE_URL, process.env.VITE_SUPABASE_URL) ||
+    getSupabaseUrlFromProjectId(
+      getSupabaseEnv(process.env.SUPABASE_PROJECT_ID, process.env.VITE_SUPABASE_PROJECT_ID),
+    );
+  const SUPABASE_SERVICE_ROLE_KEY = getSupabaseEnv(process.env.SUPABASE_SERVICE_ROLE_KEY, process.env.VITE_SUPABASE_SERVICE_ROLE_KEY);
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     const missing = [
@@ -20,6 +38,9 @@ function createSupabaseAdminClient() {
   }
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    global: {
+      fetch: createSupabaseFetch(),
+    },
     auth: {
       storage: undefined,
       persistSession: false,
