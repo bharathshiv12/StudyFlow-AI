@@ -1,26 +1,32 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tanstack-start-app",
+  "name": "studyflow-ai",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
-  
+
+  // Public Supabase settings. Safe to expose: they contain only the project URL.
+  // Secrets are NOT declared here; set them with `wrangler secret put <NAME> --env production`.
+  // Required secrets: SUPABASE_PUBLISHABLE_KEY, GEMINI_API_KEY
+  // Optional secret:   SUPABASE_SERVICE_ROLE_KEY (server-only)
+  "vars": {
+    "VITE_SUPABASE_URL": "https://llbvdhwabffscjkcljze.supabase.co",
+    "SUPABASE_URL": "https://llbvdhwabffscjkcljze.supabase.co"
+  },
+
   // Environment configuration for Cloudflare Workers
   // Ensure Supabase credentials are available in CF edge runtime
   "env": {
     "production": {
-      // Public variables available to both client and server
       "vars": {
-        "VITE_SUPABASE_URL": "https://vwkxjnkdbupewezzosqc.supabase.co",
-        "SUPABASE_URL": "https://vwkxjnkdbupewezzosqc.supabase.co"
-      },
-      // Secrets should be set via: wrangler secret put SUPABASE_PUBLISHABLE_KEY --env production
-      "secrets": ["SUPABASE_PUBLISHABLE_KEY", "SUPABASE_SERVICE_ROLE_KEY"]
+        "VITE_SUPABASE_URL": "https://llbvdhwabffscjkcljze.supabase.co",
+        "SUPABASE_URL": "https://llbvdhwabffscjkcljze.supabase.co"
+      }
     },
     "development": {
       "vars": {
-        "VITE_SUPABASE_URL": "https://vwkxjnkdbupewezzosqc.supabase.co",
-        "SUPABASE_URL": "https://vwkxjnkdbupewezzosqc.supabase.co"
+        "VITE_SUPABASE_URL": "https://llbvdhwabffscjkcljze.supabase.co",
+        "SUPABASE_URL": "https://llbvdhwabffscjkcljze.supabase.co"
       }
     }
   },
